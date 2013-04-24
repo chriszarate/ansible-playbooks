@@ -1,0 +1,8 @@
+---
+# nginx
+delete_default_vhost: true
+user: www-data
+worker_processes: $ansible_processor_count
+pid: /var/run/nginx.pid
+worker_connections: 768
+include_conf: /vagrant/etc/nginx.conf
