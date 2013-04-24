@@ -1,0 +1,4 @@
+---
+  - name: APT | Install prerequisites
+    apt: pkg=python-software-properties update_cache=yes
+    tags: apt

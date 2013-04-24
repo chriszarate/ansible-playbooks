@@ -1,0 +1,23 @@
+---
+  - name: Node.js | Add the node.js PPA
+    apt_repository: repo=ppa:chris-lea/node.js
+    tags: nodejs
+
+  - name: Node.js | Install nodejs and npm
+    apt: pkg=nodejs update_cache=yes
+    tags: nodejs
+
+  - name: Node.js | Install packages
+    command: npm install -g $item
+    with_items:
+      - yo
+      - grunt-cli
+      - bower
+
+# Not ready until v1.2.
+# - name: Node.js | Install packages
+#   npm: name=$item global=yes
+#   with_items:
+#     - yo
+#     - grunt-cli
+#     - bower

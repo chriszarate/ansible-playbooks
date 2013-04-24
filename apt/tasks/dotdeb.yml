@@ -1,0 +1,11 @@
+---
+  - name: APT | Add DotDeb squeeze repository
+    apt_repository: repo='$item'
+    with_items:
+      - deb http://packages.dotdeb.org squeeze all
+      - deb-src http://packages.dotdeb.org squeeze all
+    tags: dotdeb
+
+  - name: APT | Install DotDeb key
+    apt_key: url=http://www.dotdeb.org/dotdeb.gpg
+    tags: dotdeb

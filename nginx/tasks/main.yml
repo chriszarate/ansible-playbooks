@@ -1,0 +1,29 @@
+---
+  - name: nginx | Install nginx
+    apt: pkg=nginx update_cache=yes
+    tags: nginx
+
+  - name: nginx | Write nginx.conf
+    template: src=nginx/templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+    notify:
+      - restart nginx
+    tags: nginx
+
+  - name: nginx | Delete default vhost
+    file: path=/etc/nginx/sites-enabled/default state=absent
+    only_if: "$delete_default_vhost"
+    notify:
+      - restart nginx
+    tags: nginx
+
+  - name: nginx | Add nginx "$hostname" vhost
+    template: src=nginx/templates/vhost.j2 dest=/etc/nginx/sites-available/$hostname
+    notify:
+      - restart nginx
+    tags: nginx
+
+  - name: nginx | Link nginx "$hostname" vhost in sites-enabled
+    file: src=/etc/nginx/sites-available/$hostname dest=/etc/nginx/sites-enabled/$hostname state=link
+    notify:
+      - restart nginx
+    tags: nginx

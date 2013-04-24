@@ -1,0 +1,13 @@
+---
+- name: NPM, nginx
+  hosts: maps
+  user: vagrant
+  sudo: true
+
+  tasks:
+  - include: apt/tasks/main.yml
+  - include: nginx/tasks/main.yml
+  - include: nodejs/tasks/main.yml
+
+  handlers:
+  - include: nginx/handlers/main.yml

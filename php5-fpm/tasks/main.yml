@@ -1,0 +1,23 @@
+---
+  - name: PHP5 | Install $item
+    apt: pkg=$item state=installed
+    with_items:
+      - php5-fpm
+      - php5-apc
+      - php5-curl
+      - php5-gd
+      - php5-mysql
+      - php5-suhosin
+    tags: php5-fpm
+
+  - name: PHP5 | Delete default pool
+    file: path=/etc/php5/fpm/pool.d/www.conf state=absent
+    notify:
+      - restart php5-fpm
+    tags: php5-fpm
+
+  - name: PHP5 | Add php5-fpm pool
+    template: src=php5-fpm/templates/pool.conf.j2 dest=/etc/php5/fpm/pool.d/www.conf mode=0644
+    notify:
+      - restart php5-fpm
+    tags: php5-fpm
